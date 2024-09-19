@@ -2,6 +2,7 @@
   "name": "socialmediaapi",
   "version": "1.0.0",
   "main": "app.js",
+  "type":"module",
   "directories": {
     "test": "tests"
   },
@@ -19,5 +20,8 @@
     "express": "^4.21.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.6.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.5"
   }
 }
