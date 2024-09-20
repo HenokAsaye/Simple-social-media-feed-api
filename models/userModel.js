@@ -14,6 +14,9 @@ const userSchema = mongoose.Schema({
   isVerified: { type: Boolean, default: false },
   lastLogin: { type: Date },
   notifications: [{ type: Schema.Types.ObjectId, ref: 'Notification' }],
+  posts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
+  comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
+  likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Like' }]
 });
  
 
