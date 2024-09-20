@@ -53,10 +53,6 @@ export const followUser = async(req,res)=>{
         res.status(500).json({error:error});
     }
 }
-
-
-
-
 export const unfollowUser = async(req,res)=>{
     const {username} = req.body;
     try{

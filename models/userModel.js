@@ -4,8 +4,8 @@ const userSchema = mongoose.Schema({
   username: { type: String, required: true, unique: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  profilePicture: { type: String },                      // Optional
-  bio: { type: String },                                 // Optional
+  profilePicture: { type: String },                    
+  bio: { type: String },                                
   followers: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   following: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   postsCount: { type: Number, default: 0 },

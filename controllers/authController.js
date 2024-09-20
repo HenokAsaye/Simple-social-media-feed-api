@@ -21,29 +21,28 @@ export const signup = async(req,res)=>{
          };
          const user = await newUser.save();
          const token = generateToken(user);
-        res.status(201).send("Account Created Successfully!")
+        res.status(201).json({message:"Welcome!You have created account successfully!",token:token})
 
     }catch(error){
-        res.status(500).Json({message:"server Error"})
+        res.status(500).Json({message:"Please try again there is unkown error on the server!",error:error.stack})
     }
 }
  export const login = async(req,res)=>{
-    const{username,password}= req.body;
-    const user = await User.findOne({username:username});
+    const{email,password}= req.body;
+    const user = await User.findOne({email:email});
 
     try{
 
         if(!user){
-            return res.status(400).json({message:"Account not found!"})
+            return res.status(400).json({message:`There is no account with  ${email} email`})
         }
         const passwordMAtch = await bcrypt.compare(password,User.password)
-
         if(!passwordMAtch){
-            return res.status(401).json({message:"Invalid password or username"})
+            return res.status(401).json({message:"Invalid password or username,please Try Again"})
         }
         const token = generateToken(user);
-        res.status(200).json({username:username,token:token})
+        res.status(200).json({email:email,token:token})
     }catch(error){
-        res.status(500).json({error:error})
+        res.status(500).json({message:`please try Again There migh be unkown error on the server`,error:error})
     }
 };
