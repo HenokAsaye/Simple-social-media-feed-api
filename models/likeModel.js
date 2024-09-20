@@ -10,7 +10,7 @@ const likeScehma = mongoose.Schema({
         ref:'Post'
     },
     comment:{
-        type:Schema.TYpes.objectId,
+        type:Schema.Types.objectId,
         ref:'Comment'
     },
     createdAt:{
