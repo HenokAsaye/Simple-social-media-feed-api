@@ -1,18 +1,18 @@
-import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
-dotenv.config();
+import jwt from 'jsonwebtoken';
+import User from '../models/userModel.js';
 
-export const auth = (req,res,next)=>{
-    const token = req.header["authorization"];
-    if(!token){
-        return res.status(401).send("Empty Token");
-    }
-    try{
-        const decoded = jwt.verify(token,process.env.JWT_KEY)
-        req.user = decoded;
-        next()
-    }catch(error){
-        res.status(500).json({message:"Please Try Again",Error:error.message})
+const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];  
 
-    }
-}
+  if (!token) return res.status(401).json({ message: 'Access Token Required' });
+
+  jwt.verify(token, process.env.JWT_SECRET, async (err, user) => {
+    if (err) return res.status(403).json({ message: 'Invalid Token' });
+
+    req.user = await User.findById(user._id); 
+    next();
+  });
+};
+
+export default authenticateToken;
