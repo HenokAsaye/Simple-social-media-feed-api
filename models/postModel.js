@@ -1,6 +1,10 @@
 import mongoose from "mongoose";
 
 const postSchema = mongoose.Schema({
+    id:{
+        type:Number,
+        unique:true
+    },
     content:{
         type:String,
         required:true,
