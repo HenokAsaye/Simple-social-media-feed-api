@@ -16,7 +16,7 @@ export const commentOnPost = async(req,res)=>{
         const newComment = new Comment({
             comment:comment,
             user:req.user._id,
-            comment
+            post:postId
         })
         await newComment.save()
         Post.commentCount = (Post.commentCount || 0) + 1
@@ -39,12 +39,12 @@ export const deleteComment = async(req,res)=>{
             return res.status(404).json({message:"Post not found"})
         }
         const findComment =  await Comment.findById(commentId);
-        if(!findComment){
-            return res.status(404).json({message:"Comment Not found"})
+        if(!findComment || findComment.user.toString() !== req.user._id){
+            return res.status(404).json({message:"Comment Not found or unAuthorized!"})
         }
-        await Comment.deleteOne({comment:commentId,user:req.user._id})
+        await Comment.deleteOne({comment:commentId})
 
-        Post.commentCount = (Post.commentCount)-1
+        findPost.commentCount = (findPost.commentCount)-1
         await Post.save()
         res.status(200).json({message:"comment deleted successfully!",comment:commentId})
 
@@ -65,16 +65,12 @@ export const editComment = async(req,res)=>{
             return res.status(404).json({message:"Post not found"})
         }
         const findComment =  await Comment.findById(commentId);
-        if(!findComment){
-            return res.status(404).json({message:"Comment Not found"})
+        if(!findComment  || findComment.user.toString() !== req.user._id){
+            return res.status(404).json({message:"Comment Not found or UnAuthorized!"})
         }
-        const updatedComment = new Comment({
-            Comment:editedComment,
-            user:req.user._id,
-            editedComment
-        })
-        await updatedComment.save();
-        res.status(200).json({message:"Comment Edited Successfully!",comment:editedComment})
+        findComment.comment = editedComment
+        await findComment.save();
+        res.status(200).json({message:"Comment Edited Successfully!",comment:findComment})
     }catch(error){
         res.status(500).json({message:"server error,Please Try Again",error:error.message})
     }
