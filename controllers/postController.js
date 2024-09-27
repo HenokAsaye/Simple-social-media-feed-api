@@ -2,7 +2,8 @@ import User from "../models/userModel.js";
 import Post from "../models/postModel.js";
 import Comment from "../models/commentModel.js";
 import like from "../models/likeModel.js";
-import { addImage } from "../middlewares/multerMiddleware.js";
+import { feedUser } from "../services/feedService.js";
+
 
 export const createPost = async (req,res)=>{
     const {content,tag} =req.body;
@@ -89,23 +90,22 @@ export const searchTag = async(req,res)=>{
 
 export const getFollowingPosts = async(req,res)=>{
     const currentUser = req.user._id;
-
+    const page = parseInt(req.query.page) || 1
+    const limit = parseInt(req.query.limit) || 1
     try{
-        const user = await findById(currentUser).populate('following');
-
-        if(!user.following || user.following.length === 0){
-            return res.status(404).json({message:"you are not following anyone!"});
-        };
-
-        const followingIds = user.following.map(followingUser => followingUser._id);
-        const posts = await Post.find({author:{$in:followingIds}}).sort({createdAt:-1});
-
-        res.status(200).json({posts})
-        }catch(error){
-            res.status(500).json({message:"server-error",error:error.message})
+        const posts = await feedUser(currentUser , page , limit)
+        if(!posts || posts.length === 0){
+            return res.status(404).json({message:"posts ot found or you are new user"})
         }
+        res.status(200).json({posts})
 
+    }catch(error){
+        res.status(500).json({message:"server error Please try Again",error:error.message})
+    }
 
+ 
+
+   
 };
 export const likePost = async (req,res)=>{
     const {postId} = req.params;
