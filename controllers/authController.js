@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import { generateToken } from "../utils/jwt.js";
 import User from "../models/userModel.js";
-import upload from "../config/uploadConfig.js"
+
 
 export const signup = async(req,res)=>{
     const {username,email,password,bio} = req.body;
