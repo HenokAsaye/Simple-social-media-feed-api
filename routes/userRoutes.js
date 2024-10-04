@@ -2,11 +2,11 @@ import {Router} from "express";
 import {updateProfile,followUser,unfollowUser,searchUser,getUserActivity} from "../controllers/userControllers.js";
 const router = Router();
 
-router.patch("/update",updateProfile);
-router.post("/follow",followUser);
-router.delete("/unfollow",unfollowUser);
-router.get("/find",searchUser);
-router.get("/user",getUserActivity);
+router.patch("/",updateProfile);
+router.post("/",followUser);
+router.delete("/",unfollowUser);
+router.get("/",searchUser);
+router.get("/",getUserActivity);
 
 
 export default router;

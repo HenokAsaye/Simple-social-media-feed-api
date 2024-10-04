@@ -2,10 +2,10 @@ import {Router} from "express";
 import {createPost,editPost,deletePost,searchTag,getFollowingPosts} from "../controllers/postController.js";
 const router = Router();
 
-router.post("/AddPost",createPost);
-router.patch("/editPost",editPost);
-router.delete("/deletePost",deletePost);
-router.get("/serachTag",searchTag);
-router.get("/getffPost",getFollowingPosts);
+router.post("/",createPost);
+router.patch("/",editPost);
+router.delete("/",deletePost);
+router.get("/",searchTag);
+router.get("/",getFollowingPosts);
 
 export default router;

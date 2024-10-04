@@ -2,11 +2,11 @@ import {Router} from "express"
 import {likeForComment,likeForPost,likePost,unlikePost,UnlikeComment,LikeComment} from "../controllers/likeController.js";
 const router = Router();
 
-router.post("/likePost",likePost);
-router.post("/likeComment",LikeComment);
-router.get("/allUsers",likeForPost)
-router.get("/allLikers",likeForComment)
-router.delete("/unLikePost",unlikePost);
-router.delete("/unLikeComment",UnlikeComment)
+router.post("/",likePost);
+router.post("/",LikeComment);
+router.get("/",likeForPost)
+router.get("/",likeForComment)
+router.delete("/",unlikePost);
+router.delete("/",UnlikeComment)
 
 export default router;
