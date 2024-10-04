@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, {Schema} from "mongoose";
 
 const notificationSchema = mongoose.Schema({
     recipent:{

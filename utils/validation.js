@@ -2,14 +2,14 @@ import {check , validationResult}  from "express-validator";
 
 export const validateLogin = [
     check('username')
-        .notEmpty().withmessage("username is required!")
-        .isLength({min:3}).withmessage('username must be atleast 3 charachter long'),
+        .notEmpty().withMessage("username is required!")
+        .isLength({min:3}).withMessage('username must be atleast 3 charachter long'),
     check('password')
-        .notEmpty().withmessage('password is required!')
-        .isLength({min:3,max:15}).withmesssage('password must be atleast 3 charachter long and atmost 15 word long'),
+        .notEmpty().withMessage('password is required!')
+        .isLength({min:3,max:15}).withMessage('password must be atleast 3 charachter long and atmost 15 word long'),
     check('email')
-        .isEmail().withmessage('please enter valid email')
-        .notEmpty().withmessage('email is required to cerate account!'),
+        .isEmail().withMessage('please enter valid email')
+        .notEmpty().withMessage('email is required to cerate account!'),
     (req,res,next)=>{
         const errors = validationResult(req);
         if(errors){

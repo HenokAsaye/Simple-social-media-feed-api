@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose"
+import mongoose, {Schema} from "mongoose"
 
 
 const commentSchema = mongoose.Schema({
@@ -12,7 +12,7 @@ const commentSchema = mongoose.Schema({
         required:true
     },
     post:{
-        type:Schema.Types,ObjectId,
+        type:Schema.Types.ObjectId,
         ref:'Post',
         required:true
     },

@@ -1,33 +1,36 @@
-import {server} from "socket.io";
-const io = (server,{
+import { Server } from "socket.io";
+const io = new Server( {
     cors:{
         origin:'*',
         method:['GET','POST']
     }
-});
-const onlineUsers = Map();
-io.on("connection",(socket)=>{
-    console.log("connected to socket",socket.id)
-});
 
-io.on('register',(userId)=>{
-    onlineUsers(socket.io,userId)
 });
+const onlineUsers = new Map();
 
-io.on('disconnect',(socket)=>{
-    console.log('userDisconnected', socket.id)
-    onlineUsers.forEach((value,key)=>{
-        if(value === socket.id){
-            onlineUsers.delete(key);
-        };
+
+io.on("connection", (socket) => {
+  console.log("connected to socket", socket.id);
+  socket.on('register', (userId) => {
+    onlineUsers.set(userId, socket.id);
+  });
+
+  socket.on('disconnect', () => {
+    console.log('user disconnected', socket.id);
+    onlineUsers.forEach((value, key) => {
+      if (value === socket.id) {
+        onlineUsers.delete(key);  
+      }
     });
+  });
 });
 
-const sendNotification =(recipentId,notification)=>{
-    const socketId = onlineUsers.get(recipentId);
-    if(socketId){
-        io.to(socketId).emit("newnotification",notification);
-    };
+// Function to send notification
+const sendNotification = (recipientId, notification) => {
+  const socketId = onlineUsers.get(recipientId);  // Get the socket ID for the recipient
+  if (socketId) {
+    io.to(socketId).emit("newnotification", notification);  // Send notification to the recipient
+  }
 };
 
-export  {io,sendNotification};
+export { io, sendNotification };

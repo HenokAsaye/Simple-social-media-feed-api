@@ -4,7 +4,6 @@ import connectToDb from "./config/db.js";
 import app from "./app.js";
 
 dotenv.config();
-const app = express();
 
 connectToDb().then(()=>{
     app.listen(process.env.PORT,()=>{
