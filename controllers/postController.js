@@ -12,16 +12,18 @@ export const createPost = async (req,res)=>{
         if(!content && !addImage){
             res.status(403).json({message:"content or image is required to post this post"})
         }
-        const newPost = {
-            constent:content || '',
+        const newPost = new Post({
+            content:content || '',
             addImage:addImage ? [addImage]:[],
             tag:tag || '',
             user:req.user._id
-        };
+        });
         await newPost.save()
+        console.log(req.user);
         return res.status(201).json({message:"post created successfully",post:newPost});
     }catch(error){
-        res.status(500).json({message:"server-error",error:error.message})
+        res.status(500).json({message:"server-error"})
+        console.log(error)
     };
 
 };
@@ -102,68 +104,4 @@ export const getFollowingPosts = async(req,res)=>{
     }catch(error){
         res.status(500).json({message:"server error Please try Again",error:error.message})
     }
-
- 
-
-   
 };
-export const likePost = async (req,res)=>{
-    const {postId} = req.params;
-    try{
-        const post = await findById(postId);
-        if(!post){
-            return res.status(404).json({message:"post not found"});
-        };
-
-        const likeExists = await like.findOne({post:postId , user:req.user._id});
-        if(likeExists){
-            return res.status(400).json({message:"you have already like this post!"});
-
-        }
-
-        const newLike = new like({
-            post:postId,
-            user:req.user._id
-        })
-        await newLike.save();
-
-        post.likeCount +=1;
-        await post.save();
-
-        res.status(200).json({message:'post Liked Successfullty',post})
-
-    }catch(error){
-        res.status(500).json({messsge:"server-error",error:error.message})
-    }
-};
-
-
-export const commentOnPOst = async (req,res)=>{
-    const {postId} = req.params
-    const {comment} = req.body
-
-    try{
-        const posts =await Post.findById(postId);
-
-        if(!posts){
-            return res.status(404).json({message:"post not found!"})
-        }
-        const newComment =new Comment({
-            Comment:Comment,
-            user:req.user._id,
-            comment
-        })
-        await newComment.save();
-
-        Post.commentCount +=1;
-        await Post.save();
-
-        res.status(201).json({message:"Comment added successfully",posts})
-
-
-    }catch(error){
-        res.status(500).json({message:"server-error",error:error.message})
-    }
-}
-
-

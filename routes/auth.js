@@ -1,8 +1,13 @@
-import {Router} from "express";
-import {signup,login} from "../controllers/authController.js";
-import {validateLogin,} from "../utils/validation.js";
+import { Router } from "express";
+import { signup, login } from "../controllers/authController.js";
+import { profilepicture } from "../middlewares/multerMiddleware.js";
 
 const router = Router();
-router.post("/signUp",validateLogin,signup);
-router.post("/login",validateLogin,login);
+
+// Route for signup
+router.post("/signUp", profilepicture, signup);
+
+// Route for login
+router.post("/login", login);
+
 export default router;

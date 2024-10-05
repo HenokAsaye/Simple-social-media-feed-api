@@ -25,11 +25,11 @@ io.on("connection", (socket) => {
   });
 });
 
-// Function to send notification
+
 const sendNotification = (recipientId, notification) => {
-  const socketId = onlineUsers.get(recipientId);  // Get the socket ID for the recipient
+  const socketId = onlineUsers.get(recipientId);  
   if (socketId) {
-    io.to(socketId).emit("newnotification", notification);  // Send notification to the recipient
+    io.to(socketId).emit("newnotification", notification);  
   }
 };
 
