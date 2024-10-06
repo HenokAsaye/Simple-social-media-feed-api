@@ -37,25 +37,23 @@ export const login = async(req, res) => {
     console.log("login is called");
 
     try {
-        // Find the user by email
         const user = await User.findOne({ email });
         
         if (!user) {
             return res.status(400).json({ message: `There is no account with ${email} email` });
         }
 
-        // Compare the entered password with the stored hashed password
         const passwordMatch = await bcrypt.compare(password, user.password);
         
         if (!passwordMatch) {
             return res.status(401).json({ message: "Invalid password or username, please try again" });
         }
 
-        // Generate JWT token and send the response
         const token = generateToken(user);
         res.status(200).json({ email: user.email, token: token });
 
     } catch (error) {
         res.status(500).json({ message: "Please try again, there might be an unknown error on the server", error: error.stack });
+        console.log(error);
     }
 };

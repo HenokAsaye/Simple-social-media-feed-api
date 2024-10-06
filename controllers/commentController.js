@@ -14,13 +14,13 @@ export const commentOnPost = async(req,res)=>{
             return res.status(404).json({message:"Post not found"})
         }
         const newComment = new Comment({
-            comment:comment,
-            user:req.user._id,
+            content:comment,
+            Author:req.user._id,
             post:postId
         })
         await newComment.save()
-        Post.commentCount = (Post.commentCount || 0) + 1
-        await Post.save()
+        findPost.commentCount = (findPost.commentCount || 0) + 1
+        await findPost.save();
         res.status(201).json({message:"commented on post successfully",comment})
 
     }catch(error){
@@ -39,18 +39,22 @@ export const deleteComment = async(req,res)=>{
             return res.status(404).json({message:"Post not found"})
         }
         const findComment =  await Comment.findById(commentId);
-        if(!findComment || findComment.user.toString() !== req.user._id){
+        console.log(findComment)
+        console.log(findComment.Author)
+        
+        if(!findComment || findComment.Author.toString() !== req.user._id.toString()){
+            console.log(req.user._id)
             return res.status(404).json({message:"Comment Not found or unAuthorized!"})
         }
-        await Comment.deleteOne({comment:commentId})
+        await Comment.deleteOne({_id:commentId})
 
         findPost.commentCount = (findPost.commentCount)-1
-        await Post.save()
+        await findPost.save()
         res.status(200).json({message:"comment deleted successfully!",comment:commentId})
 
 
     }catch(error){
-        res.tatus(500).json({message:"server error, Please try Again!",error:error.message})
+        res.status(500).json({message:"server error, Please try Again!",error:error.message})
     }
 
 }
@@ -65,10 +69,10 @@ export const editComment = async(req,res)=>{
             return res.status(404).json({message:"Post not found"})
         }
         const findComment =  await Comment.findById(commentId);
-        if(!findComment  || findComment.user.toString() !== req.user._id){
+        if(!findComment  || findComment.Author.toString() !== req.user._id.toString()){
             return res.status(404).json({message:"Comment Not found or UnAuthorized!"})
         }
-        findComment.comment = editedComment
+        findComment.content = editedComment
         await findComment.save();
         res.status(200).json({message:"Comment Edited Successfully!",comment:findComment})
     }catch(error){
@@ -84,13 +88,13 @@ export const getComment = async(req,res)=>{
             return res.status(404).json({message:"Post not found"})
         }
 
-        const comment = await Comment.find({post:postId}).populate("user","username")
+        const comment = await Comment.find({post:postId}).populate("Author","username")
 
         if(comment.length === 0){
             return res.status(404).json({message:"no comment found on the Post",post:postId})
         }
         res.status(200).json({message:"All Comments are here!",comment:comment})
     }catch(error){
-        res.status(500).json({message:"server error,Please Try Again!"})
+        res.status(500).json({message:"server error,Please Try Again!",error:error.stack})
     }
 }

@@ -1,7 +1,5 @@
 import User from "../models/userModel.js";
 import Post from "../models/postModel.js";
-import Comment from "../models/commentModel.js";
-import like from "../models/likeModel.js";
 import { feedUser } from "../services/feedService.js";
 
 
@@ -14,9 +12,9 @@ export const createPost = async (req,res)=>{
         }
         const newPost = new Post({
             content:content || '',
-            addImage:addImage ? [addImage]:[],
+            media:addImage ? [addImage]:[],
             tag:tag || '',
-            user:req.user._id
+            author:req.user._id
         });
         await newPost.save()
         console.log(req.user);

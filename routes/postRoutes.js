@@ -4,7 +4,7 @@ import { authenticateToken } from "../middlewares/authMiddleware.js";
 import { addImage } from "../middlewares/multerMiddleware.js";
 const router = Router();
 
-router.post("/",addImage,authenticateToken,createPost);
+router.post("/",authenticateToken,addImage,createPost);
 router.patch("/",authenticateToken,editPost);
 router.delete("/",authenticateToken,deletePost);
 router.get("/",authenticateToken,searchTag);
