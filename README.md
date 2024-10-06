@@ -32,7 +32,7 @@ This is a RESTful API for a social media platform where users can post updates, 
 ## Technologies
 - **Node.js**
 - **Express.js**
-- **MongoDB** (or PostgreSQL for relational structure)
+- **MongoDB** 
 - **JWT Authentication**
 - **Socket.io** (for real-time notifications)
 - **Mongoose/Sequelize ORM** (for managing database relationships)
