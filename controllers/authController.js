@@ -6,9 +6,7 @@ import User from "../models/userModel.js";
 export const signup = async(req,res)=>{
     const {username,email,password,bio} = req.body;
     const profilePicture = req.file ? req.file.filename : null;
-    console.log(req.body);
-    console.log(req.file);
-    console.log("signup is called")
+
     try{
         const existingUser = await User.findOne({email});
         if(existingUser){
@@ -28,13 +26,11 @@ export const signup = async(req,res)=>{
 
     }catch(error){
         res.status(500).json({message:"Please try again there is unkown error on the server!",error:error.stack})
-        console.log(password)
-        console.log(username)
+ 
     }
 }
 export const login = async(req, res) => {
     const { email, password } = req.body;
-    console.log("login is called");
 
     try {
         const user = await User.findOne({ email });
@@ -54,6 +50,6 @@ export const login = async(req, res) => {
 
     } catch (error) {
         res.status(500).json({ message: "Please try again, there might be an unknown error on the server", error: error.stack });
-        console.log(error);
+    
     }
 };
