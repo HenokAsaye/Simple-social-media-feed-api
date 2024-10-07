@@ -42,7 +42,7 @@ This is a RESTful API for a social media platform where users can post updates, 
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/social-media-feed-api.git
+   git clone https://github.com/HenokAsaye/social-media-feed-api.git
    cd social-media-feed-api
    ```
 
@@ -54,10 +54,9 @@ This is a RESTful API for a social media platform where users can post updates, 
 3. Set up environment variables:
    - Create a `.env` file in the root directory and configure the following:
      ```
-     PORT=5000
+     PORT=3000
      MONGODB_URI=<your-mongodb-uri>
      JWT_SECRET=<your-jwt-secret>
-     REDIS_URL=<your-redis-url> # Optional
      ```
 
 4. Run the application:
@@ -74,7 +73,7 @@ You can use Postman or any API client to interact with the following endpoints. 
 ### Posts
 - **Create a Post**
   ```http
-  POST /api/posts
+  POST /post
   ```
   Body:
   ```json
@@ -86,34 +85,29 @@ You can use Postman or any API client to interact with the following endpoints. 
 
 - **Edit a Post**
   ```http
-  PUT /api/posts/:postId
+  PATCH /post/:postId
   ```
 
 - **Delete a Post**
   ```http
-  DELETE /api/posts/:postId
-  ```
-
-- **Get Feed (Posts from followed users)**
-  ```http
-  GET /api/feed
+  DELETE /post/:postId
   ```
 
 ### Likes
 - **Like a Post**
   ```http
-  POST /api/posts/:postId/like
+  POST /LIKE/:postId
   ```
 
 - **Unlike a Post**
   ```http
-  DELETE /api/posts/:postId/like
+  DELETE /like/:postId/like
   ```
 
 ### Comments
 - **Add a Comment**
   ```http
-  POST /api/posts/:postId/comment
+  POST /comment/:postId
   ```
   Body:
   ```json
@@ -124,34 +118,34 @@ You can use Postman or any API client to interact with the following endpoints. 
 
 - **Delete a Comment**
   ```http
-  DELETE /api/posts/:postId/comment/:commentId
+  DELETE /comment/:postId
   ```
 
 ### User Relationships
 - **Follow a User**
   ```http
-  POST /api/users/:userId/follow
+  POST /user
   ```
 
 - **Unfollow a User**
   ```http
-  DELETE /api/users/:userId/follow
+  DELETE /user
   ```
 
 - **Get User's Followers**
   ```http
-  GET /api/users/:userId/followers
+  GET /user
   ```
 
-- **Get User's Following**
+- **Get  Following posts**
   ```http
-  GET /api/users/:userId/following
+  GET / post/getffPost
   ```
 
 ### Notifications
 - **Get Notifications**
   ```http
-  GET /api/notifications
+  GET /notification
   ```
 
 ## Feed Algorithm
@@ -172,7 +166,7 @@ This project will help you understand the following concepts:
 1. **Feed Algorithms**: Learn how to build and optimize a social media feed based on user relationships and post engagement.
 2. **User Relationships**: Manage followers/following relationships and their impact on the feed.
 3. **Real-time Features**: Implement real-time updates using **Socket.io** for notifications.
-4. **Data Management**: Learn how to manage complex data relationships between users, posts, comments, likes, and notifications using databases like MongoDB or PostgreSQL.
+4. **Data Management**: Learn how to manage complex data relationships between users, posts, comments, likes, and notifications using databases like MongoDB.
 
 ## License
 
