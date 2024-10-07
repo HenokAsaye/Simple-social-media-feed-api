@@ -168,10 +168,6 @@ This project will help you understand the following concepts:
 3. **Real-time Features**: Implement real-time updates using **Socket.io** for notifications.
 4. **Data Management**: Learn how to manage complex data relationships between users, posts, comments, likes, and notifications using databases like MongoDB.
 
-## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
 
 You can customize it further based on the specific technologies and features you want to add.
