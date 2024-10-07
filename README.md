@@ -20,7 +20,7 @@ This is a RESTful API for a social media platform where users can post updates, 
 - [Feed Algorithm](#feed-algorithm)
 - [Real-time Notifications](#real-time-notifications)
 - [Learning Outcomes](#learning-outcomes)
-- [License](#license)
+
 
 ## Features
 - **Create, Edit, and Delete Posts**: Users can create, update, and delete posts.
