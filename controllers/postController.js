@@ -36,7 +36,7 @@ export const editPost = async(req,res)=>{
         if(!post){
             return res.status(404).json({message:"post not found"})
         }
-        if(post.author.toString() !== req.user._id){
+        if(post.author.toString() !== req.user._id.toString()){
             return res.status(403).json({message:"Unauthorized to edit this post"});
         };
         if(content){
@@ -49,7 +49,7 @@ export const editPost = async(req,res)=>{
             post.media.push(addImage);
         }
         await post.save();
-        return res.status(200).json({message:"post updated successfully",post:post})
+        return res.status(200).json({message:"post updated successfully",post:post,postId:postId})
     }catch(error){
         res.status(500).json({message:"server-error",error:error.message})
     };
@@ -62,7 +62,7 @@ export const deletePost = async(req,res)=>{
         if(!post){
             return res.status(404).json({message:"Poast not found!"})
         }
-        if(Post.author.toString() !== req.user._id){
+        if(Post.author.toString() !== req.user._id.toString()){
             return res.status(403).json({message:"Unauthorized to delete this post!"})
         };
         await Post.findByIdAndDelete(postId)

@@ -1,10 +1,10 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-dotenv.config({ path: './config.env' }); /
+dotenv.config({ path: './config.env' }); 
 
 
 beforeAll(async () => {
-    const dbURI = process.env.TEST_DB_URI || 'mongodb://localhost:27017/socialmediaapi-test'; // Ensure this points to your test DB
+    const dbURI = process.env.TEST_DB_URI || 'mongodb://localhost:27017/socialmediaapi-test';
     await mongoose.connect(dbURI, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
