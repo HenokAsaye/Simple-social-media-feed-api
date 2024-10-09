@@ -1,11 +1,10 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-dotenv.config({ path: './config.env' }); 
+dotenv.config(); 
 
 
 beforeAll(async () => {
-    const dbURI = process.env.TEST_DB_URI 
-    await mongoose.connect(dbURI, {
+    await mongoose.connect(process.env.TEST_DB_URI, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
     });
